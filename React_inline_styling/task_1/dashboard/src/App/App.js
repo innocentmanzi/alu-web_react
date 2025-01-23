@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     height: "100vh",
     maxWidth: "100vw",
     position: "relative",
+    fontFamily: "Arial, Helvetica, sans-serif",
   },
 });
 
