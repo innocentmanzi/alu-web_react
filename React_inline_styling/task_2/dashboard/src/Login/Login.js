@@ -1,29 +1,26 @@
 import React from 'react';
-import { StyleSheet, css } from 'aphrodite';
-
-const Login = () => {
-  return (
-    <>
-      <p>Login to access the full dashboard</p>
-      <form>
-        <label htmlFor='email-add'>Email:</label>
-        <input
-          type='email'
-          name='email-add'
-          className={css(styles.input)}
-        ></input>
-        <label htmlFor='psw'>Password:</label>
-        <input type='password' name='psw' className={css(styles.input)}></input>
-        <button>OK</button>
-      </form>
-    </>
-  );
-};
+import {css, StyleSheet} from "aphrodite";
 
 const styles = StyleSheet.create({
-  input: {
-    margin: '0.7rem',
-  },
+    appInput: {
+        marginRight: '15px',
+        marginLeft: '5px',
+    },
 });
+
+function Login() {
+    return (
+        <React.Fragment>
+            <form>
+                <p>Login to access the full dashboard</p>
+                <label htmlFor='email'>Email:</label>
+                <input type='text' name='email' id='email' className={css(styles.appInput)}></input>
+                <label htmlFor='password'>Password:</label>
+                <input type='password' name='password' id='password' className={css(styles.appInput)}></input>
+                <button>OK</button>
+            </form>
+        </React.Fragment>
+    );
+}
 
 export default Login;

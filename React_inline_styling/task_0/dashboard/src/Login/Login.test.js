@@ -2,15 +2,21 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Login from './Login';
 
-describe('Login Component', () => {
-  it('renders without crashing', () => {
-    const wrapper = shallow(<Login />);
-    expect(wrapper.exists()).toEqual(true);
-  });
+describe('Login', function () {
+    it('Login component renders without crashing', function () {
+        const wrapper = shallow(<Login />);
+        expect(wrapper).toMatchSnapshot();
+    });
 
-  it('renders 2 input tags and 2 label tags', () => {
-    const wrapper = shallow(<Login />);
-    expect(wrapper.find('input')).toHaveLength(2);
-    expect(wrapper.find('label')).toHaveLength(2);
-  });
+    it('Login component renders two labels', function () {
+        const wrapper = shallow(<Login />);
+        const inputTags = wrapper.find('input');
+        expect(inputTags).toHaveLength(2);
+    });
+
+    it('Login component renders two input', function () {
+        const wrapper = shallow(<Login />);
+        const loginLabel = wrapper.find('label');
+        expect(loginLabel).toHaveLength(2);
+    });
 });

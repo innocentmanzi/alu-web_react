@@ -1,19 +1,19 @@
 import React from 'react';
 import './Login.css';
 
-const Login = () => {
-  return (
-    <>
-      <p>Login to access the full dashboard</p>
-      <form>
-        <label htmlFor='email-add'>Email:</label>
-        <input type='email' name='email-add'></input>
-        <label htmlFor='psw'>Password:</label>
-        <input type='password' name='psw'></input>
-        <button>OK</button>
-      </form>
-    </>
-  );
-};
+function Login() {
+    return (
+        <React.Fragment>
+            <form>
+                <p>Login to access the full dashboard</p>
+                <label htmlFor='email'>Email:</label>
+                <input type='text' name='email' id='email'></input>
+                <label htmlFor='password'>Password:</label>
+                <input type='password' name='password' id='password'></input>
+                <button>OK</button>
+            </form>
+        </React.Fragment>
+    );
+}
 
 export default Login;

@@ -1,53 +1,30 @@
-/** @jest-environment jsdom */
-import React from 'react';
-import { mount } from 'enzyme';
-import { StyleSheetTestUtils } from 'aphrodite';
-import WithLogging from './WithLogging';
-import Login from '../Login/Login';
+import React from "react";
+import { shallow } from "enzyme";
+import WithLogging from "./WithLogging";
 
-beforeEach(() => {
-  StyleSheetTestUtils.suppressStyleInjection();
-});
-afterEach(() => {
-  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
-});
 
-describe('WithLogging HOC', () => {
-  let consoleLogSpy;
+describe("WithLogging HOC tests", () => {
+    it("should call console.log on mount and dismount (total number of calls = 2)", () => {
+        const TestComponent = () => <p>Test Component</p>;
+        const spy = jest.spyOn(console, 'log').mockImplementation();
+        const WrappedTestComponent = WithLogging(TestComponent);
+        const wrapper = shallow(<WrappedTestComponent />);
+        expect(spy).toHaveBeenCalledTimes(1);
+        wrapper.unmount();
+        expect(spy).toHaveBeenCalledTimes(2);
+        spy.mockRestore();
+    });
 
-  beforeEach(() => {
-    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
-  });
-
-  afterEach(() => {
-    consoleLogSpy.mockRestore();
-  });
-
-  it('logs on mount and unmount with pure HTML element', () => {
-    const PureHtmlComponent = WithLogging(() => <p />);
-    const wrapper = mount(<PureHtmlComponent />);
-
-    expect(consoleLogSpy).toHaveBeenCalledWith(
-      'Component Component is mounted'
-    );
-
-    wrapper.unmount();
-
-    expect(consoleLogSpy).toHaveBeenCalledWith(
-      'Component Component is going to unmount'
-    );
-  });
-
-  it('logs on mount and unmount with Login component', () => {
-    const LoginWithLogging = WithLogging(Login);
-    const wrapper = mount(<LoginWithLogging />);
-
-    expect(consoleLogSpy).toHaveBeenCalledWith('Component Login is mounted');
-
-    wrapper.unmount();
-
-    expect(consoleLogSpy).toHaveBeenCalledWith(
-      'Component Login is going to unmount'
-    );
-  });
+    it("should log out the right message on mount and on unmount (total number of calls = 2)", () => {
+        const TestComponent = () => <p>Test Component</p>;
+        const spy = jest.spyOn(console, 'log').mockImplementation();
+        const WrappedTestComponent = WithLogging(TestComponent);
+        const wrapper = shallow(<WrappedTestComponent />);
+        expect(spy).toBeCalledTimes(1);
+        expect(spy).toBeCalledWith("Component TestComponent is mounted");
+        wrapper.unmount();
+        expect(spy).toHaveBeenCalledTimes(2);
+        expect(spy).toBeCalledWith("Component TestComponent is going to unmount");
+        spy.mockRestore();
+    });
 });

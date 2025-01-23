@@ -1,40 +1,35 @@
 import React from 'react';
-import './CourseList.css';
 import CourseListRow from './CourseListRow';
+import './CourseList.css';
+import CourseShape from "./CourseShape";
+import PropTypes from "prop-types";
 
-const CourseListRowHead = [
-  { cellOne: 'Available courses', cellTwo: null, isHeader: true },
-  { cellOne: 'Course name', cellTwo: 'Credit', isHeader: true },
-];
+function CourseList({ listCourses }) {
+    return (
+        <table id="CourseList">
+            <thead>
+            <CourseListRow textFirstCell="Available courses" isHeader={true} />
+            <CourseListRow textFirstCell="Course name" textSecondCell="Credit" isHeader={true} />
+            </thead>
+            <tbody>
+            {listCourses.length > 0 ? (
+                listCourses.map(({ id, name, credit }) => (
+                    <CourseListRow key={id} textFirstCell={name} textSecondCell={credit} />
+                ))
+            ) : (
+                <CourseListRow textFirstCell="No course available yet" />
+            )}
+            </tbody>
+        </table>
+    );
+}
 
-const CourseList = ({ listCourses }) => {
-  return (
-    <table id='CourseList'>
-      <thead>
-        {CourseListRowHead.map((course, idx) => (
-          <CourseListRow
-            key={idx}
-            textFirstCell={course.cellOne}
-            textSecondCell={course.cellTwo}
-            isHeader={course.isHeader}
-          />
-        ))}
-      </thead>
-      <tbody>
-        {listCourses?.length ? (
-          listCourses.map(({ id, name, credit }) => (
-            <CourseListRow
-              key={id}
-              textFirstCell={name}
-              textSecondCell={credit}
-            />
-          ))
-        ) : (
-          <CourseListRow textFirstCell='No course available yet' />
-        )}
-      </tbody>
-    </table>
-  );
+CourseList.defaultProps = {
+    listCourses: [],
+};
+
+CourseList.propTypes = {
+    listCourses: PropTypes.arrayOf(CourseShape),
 };
 
 export default CourseList;

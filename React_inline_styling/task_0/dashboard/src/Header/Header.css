@@ -1,13 +1,17 @@
 .App-header {
-  display: flex;
-  align-items: center;
-  font-size: 1.25rem;
-  color: var(--color-primary);
-  padding: 1.2rem 0 0.3rem 0;
-  border-bottom: 4px solid var(--color-primary);
+    height:180px;
+    border-bottom: 3px solid var(--color-primary);
+    display: flex;
+    padding-left: var(--container-spacing);
+}
+
+.App-header h1 {
+    color: var(--color-primary);
+    margin-left: 50px;
+    font-size: 2.0rem;
+    margin-top: 70px;
 }
 
 .App-header img {
-  width: 200px;
-  height: 200px;
+    height:180px;
 }

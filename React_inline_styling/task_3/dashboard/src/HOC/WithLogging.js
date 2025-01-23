@@ -1,24 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const WithLogging = (WrappedComponent) => {
-  const name =
-    WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
-  WithLogging.displayName = `WithLogging(${name})`;
+    const componentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
-  return class extends Component {
-    componentDidMount() {
-      console.log(`Component ${name} is mounted`);
+    class WithLoggingComponent extends React.Component {
+
+        componentDidMount() {
+            console.log(`Component ${componentName} is mounted`);
+        }
+
+        componentWillUnmount() {
+            console.log(`Component ${componentName} is going to unmount`);
+        }
+
+        render() {
+            return <WrappedComponent {...this.props} />;
+        }
     }
 
-    componentWillUnmount() {
-      console.log(`Component ${name} is going to unmount`);
-    }
+    WithLoggingComponent.displayName = `WithLogging(${componentName})`;
 
-    render() {
-      return <WrappedComponent {...this.props} />;
-    }
-  };
+    return WithLoggingComponent;
 };
 
 export default WithLogging;
