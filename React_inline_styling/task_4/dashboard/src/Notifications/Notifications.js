@@ -1,125 +1,152 @@
-import React, { Component } from "react";
-import { StyleSheet, css } from "aphrodite";
-import closeIcon from "../assets/close-icon.png";
-import NotificationItem from "./NotificationItem";
-import PropTypes from "prop-types";
-import NotificationItemShape from "./NotificationItemShape";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { StyleSheet, css } from 'aphrodite';
+import closeIcon from '../assets/close-icon.png';
+import NotificationItem from './NotificationItem';
+import NotificationItemShape from './NotificationItemShape';
 
 class Notifications extends Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      displayDrawer: props.displayDrawer,
+    };
     this.markAsRead = this.markAsRead.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.length > this.props.listNotifications.length;
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      nextProps.listNotifications.length >
+        this.props.listNotifications.length ||
+      nextState.displayDrawer !== this.state.displayDrawer
+    );
   }
-
   markAsRead(id) {
     console.log(`Notification ${id} has been marked as read`);
   }
 
+  handleMouseEnter() {
+    setTimeout(() => {
+      this.setState({ displayDrawer: true });
+    }, 2000);
+  }
+
+  handleMouseLeave() {
+    this.setState({ displayDrawer: false });
+  }
+
   render() {
+    const { listNotifications } = this.props;
+    const { displayDrawer } = this.state;
+
     return (
-      <React.Fragment>
-        {!this.props.displayDrawer ? (
-          <div className={css(styles.menuItem)}>
+      <div className={css(styles['notification-wrapper'])}>
+        {!displayDrawer && (
+          <div
+            className={css(styles.menuItem)}
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.handleMouseLeave}
+          >
             <p>Your notifications</p>
           </div>
-        ) : (
-          <div className={css(styles.Notifications)}>
+        )}
+        {displayDrawer && (
+          <div
+            className={css(styles.Notifications)}
+            onMouseLeave={this.handleMouseLeave}
+          >
+            <ul>
+              {listNotifications?.length ? (
+                <>
+                  <p>Here is the list of notifications</p>
+                  {listNotifications.map(({ id, html, type, value }) => (
+                    <NotificationItem
+                      key={id}
+                      type={type}
+                      value={value}
+                      html={html}
+                      id={id}
+                      markAsRead={this.markAsRead}
+                    />
+                  ))}
+                </>
+              ) : (
+                <li data-notification-type='default'>
+                  No new notification for now
+                </li>
+              )}
+            </ul>
             <button
               style={{
-                color: "#3a3a3a",
-                fontWeight: "bold",
-                background: "none",
-                border: "none",
-                fontSize: "15px",
-                position: "absolute",
-                right: "3px",
-                top: "3px",
-                cursor: "pointer",
-                outline: "none",
+                background: 'none',
+                border: 'none',
+                position: 'absolute',
+                right: '.8rem',
+                top: '1rem',
+                cursor: 'pointer',
               }}
-              aria-label="Close"
-              onClick={(e) => {
-                console.log("Close button has been clicked");
-              }}
+              aria-label='Close'
+              onClick={() => console.log('Close button has been clicked')}
             >
-              <img src={closeIcon} alt="close icon" width="10px" />
+              <img src={closeIcon} alt='closeIcon' width='18px' />
             </button>
-            {this.props.listNotifications.length != 0 ? <p>Here is the list of notifications</p> : null}
-            <ul>
-              {this.props.listNotifications.length == 0 ? <NotificationItem type="default" value="No new notification for now" /> : null}
-              {this.props.listNotifications.map((val, idx) => {
-                return <NotificationItem type={val.type} value={val.value} html={val.html} key={val.id} markAsRead={this.markAsRead} id={val.id} />;
-              })}
-            </ul>
           </div>
         )}
-      </React.Fragment>
+      </div>
     );
   }
 }
 
-const opacityAnim = {
-  "0%": { opacity: 0.5 },
-  "100%": { opacity: 1 },
+const opacity = {
+  '0%': { opacity: 0.5 },
+  '100%': { opacity: 1 },
 };
 
-const bounceAnim = {
-  "0%": { transform: "translateY(0px)" },
-  "33%": { transform: "translateY(-5px)" },
-  "66%": { transform: "translateY(5px)" },
-  "100%": { transform: "translateY(0px)" },
+const bounce = {
+  '0%': { transform: 'translateY(0px)' },
+  '33%': { transform: 'translateY(-5px)' },
+  '66%': { transform: 'translateY(5px)' },
+  '100%': { transform: 'translateY(0px)' },
 };
 
 const styles = StyleSheet.create({
-  Notifications: {
-    padding: "1em",
-    border: "2px dashed red",
-    position: "absolute",
-    top: "1.8em",
-    right: "0",
-    zIndex: "100",
-    "@media (max-width: 900px)": {
-      width: "100%",
-      padding: "0px",
-      fontSize: 20,
-      position: "relative",
-      right: 0,
-      left: 0,
-      border: "none",
+  'notification-wrapper': {
+    position: 'absolute',
+    right: '1rem',
+    margin: '1.4rem',
+    '@media (max-width: 568px)': {
+      width: '100%',
+      margin: '0',
     },
   },
 
-  "notification-header": {
-    display: "flex",
-    justifyContent: "space-between",
+  Notifications: {
+    position: 'relative',
+    padding: '1rem',
+    border: '1px dashed #e0364b',
+    '@media (max-width: 568px)': {
+      fontSize: '20px',
+      position: 'absolute',
+      top: '0',
+      height: '100vh',
+      width: '100%',
+      padding: '0',
+      border: 'none',
+      background: '#fff',
+    },
   },
 
   menuItem: {
-    position: "relative",
-    zIndex: 100,
-    textAlign: "right",
-    ":hover": {
-      cursor: "pointer",
-      animationName: [opacityAnim, bounceAnim],
-      animationDuration: "1s, 0.5s",
-      animationIterationCount: "3",
-    },
-  },
-
-  ul: {
-    "@media (max-width: 900px)": {
-      padding: 0,
-    },
-  },
-  button: {
-    "@media (max-width: 900px)": {
-      position: "relative",
-      float: "right",
+    display: 'flex',
+    justifyContent: 'end',
+    paddingBottom: '0.3rem',
+    ':hover': {
+      cursor: 'pointer',
+      animationName: [opacity, bounce],
+      animationDuration: '1s, 0.5s',
+      animationIterationCount: '3',
     },
   },
 });

@@ -1,25 +1,25 @@
-.Notifications {
-  padding: 1em;
-  border: 2px dashed red;
+.notification-wrapper {
   position: absolute;
-  top: 1.8em;
-  right: 0;
+  right: 1rem;
+  margin: 1.4rem;
 }
 
-.notification-header {
-  display: flex;
-  justify-content: space-between;
+.Notifications {
+  position: relative;
+  padding: 1rem;
+  border: 1px dashed #e0364b;
 }
 
-.menuItem {
-  text-align: right;
-}
-
-[data-notification-type="default"] {
+li[data-notification-type='default'] {
   color: blue;
 }
 
-[data-urgent],
-[data-notification-type="urgent"] {
+li[data-notification-type='urgent'] {
   color: red;
+}
+
+.menuItem {
+  display: flex;
+  justify-content: end;
+  padding-bottom: 0.3rem;
 }
