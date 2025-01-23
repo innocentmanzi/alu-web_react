@@ -1,26 +1,17 @@
-:root {
-    --primary-color: #E11D3F;
-}
-
 .Notifications {
-    border: 1px dashed var(--primary-color);
-    position: absolute;
-    padding: 0.5rem;
-    width:30rem;
-    right: 2rem;
-    background:red;
-    height:100px;
+  border: thin dotted #e0344a;
+  padding: 4px 16px;
+  float: right;
+}
+[data-notification-type='default'] {
+  color: blue;
 }
 
-[data-notification-type="default"] {
-    color: #1D0563;
-}
-
-[data-notification-type="urgent"] {
-    color: #F02201;
+[data-notification-type='urgent'] {
+  color: red;
 }
 
 .menuItem {
-    text-align: right;
-    padding-right: 2rem;
+  text-align: right;
+  margin-right: 16px;
 }

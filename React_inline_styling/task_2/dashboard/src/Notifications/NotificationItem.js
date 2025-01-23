@@ -1,37 +1,65 @@
-import React, { Component } from 'react';
-import PropTypes from "prop-types";
-import { StyleSheet, css } from "aphrodite";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { StyleSheet, css } from 'aphrodite';
 
+class NotificationItem extends React.PureComponent {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    const { type, html, value, markAsRead, id } = this.props;
+    const color = css(type === 'urgent' ? styles.urgent : styles.default);
+    let li;
 
-const styles = StyleSheet.create({
-    defaultNotification: {
-        color: '#1D0563',
-    },
-    urgentNotification: {
-        color: '#F02201',
-    },
-});
-
-const NotificationItem = React.memo(function NotificationItem({ type, html, value, id, markAsRead }) {
-    const handleItemClick = () => markAsRead(id);
-
-    return (
-        <li data-notification-type={type} className={type === "default" ? css(styles.defaultNotification) : css(styles.urgentNotification)} onClick={handleItemClick} dangerouslySetInnerHTML={html}>
+    value
+      ? (li = (
+          <li
+            className={color}
+            data-notification-type={type}
+            onClick={() => markAsRead(id)}
+          >
             {value}
-        </li>
-    );
-});
+          </li>
+        ))
+      : (li = (
+          <li
+            className={color}
+            data-notification-type={type}
+            dangerouslySetInnerHTML={html}
+            onClick={() => markAsRead(id)}
+          ></li>
+        ));
 
-NotificationItem.propTypes = {
-    type: PropTypes.string.isRequired,
-    value: PropTypes.string,
-    __html: PropTypes.shape({html: PropTypes.string}),
-    markAsRead: PropTypes.func,
-    id: PropTypes.number,
-};
+    return li;
+  }
+}
 
 NotificationItem.defaultProps = {
-    type: "default",
+  type: 'default',
+  html: {},
+  value: '',
+  markAsRead: () => {},
+  id: NaN,
 };
+
+NotificationItem.propTypes = {
+  type: PropTypes.string,
+  html: PropTypes.shape({
+    __html: PropTypes.string,
+  }),
+  value: PropTypes.string,
+  markAsRead: PropTypes.func,
+  id: PropTypes.number,
+};
+
+const styles = StyleSheet.create({
+  default: {
+    color: 'blue',
+  },
+
+  urgent: {
+    color: 'red',
+  },
+});
 
 export default NotificationItem;

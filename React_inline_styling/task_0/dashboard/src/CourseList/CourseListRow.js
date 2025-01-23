@@ -1,50 +1,47 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
-const rowStyling = {
-    backgroundColor: "#f5f5f5ab",
-};
+const CourseListRow = ({ isHeader, textFirstCell, textSecondCell }) => {
+  const bgColor1 = { backgroundColor: '#f5f5f5ab' };
+  const bgColor2 = { backgroundColor: '#deb5b545' };
+  let bgColor = undefined;
+  let content = undefined;
 
-const headerStyling = {
-    backgroundColor: "#deb5b545",
-};
-
-function CourseListRow({isHeader, textFirstCell, textSecondCell }) {
-
-  if (isHeader) {
+  if (isHeader === true) {
+    bgColor = bgColor2;
     if (textSecondCell === null) {
-      return (
-          <tr style={rowStyling}>
-            <th style={headerStyling} colSpan={2}>{textFirstCell}</th>
-          </tr>
-      );
+      content = <th colSpan='2'>{textFirstCell}</th>;
     } else {
-      return (
-          <tr style={rowStyling}>
-            <th style={headerStyling}>{textFirstCell}</th>
-            <th style={headerStyling}>{textSecondCell}</th>
-          </tr>
+      content = (
+        <Fragment>
+          <th>{textFirstCell}</th>
+          <th>{textSecondCell}</th>
+        </Fragment>
       );
     }
-  } else {
-    return (
-        <tr style={rowStyling}>
-          <td>{textFirstCell}</td>
-          <td>{textSecondCell}</td>
-        </tr>
+  }
+  if (isHeader === false) {
+    bgColor = bgColor1;
+    content = (
+      <Fragment>
+        <td>{textFirstCell}</td>
+        <td>{textSecondCell}</td>
+      </Fragment>
     );
   }
-}
 
-CourseListRow.propTypes = {
-  isHeader: PropTypes.bool,
-  textFirstCell: PropTypes.string.isRequired,
-  textSecondCell: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  return <tr style={bgColor}>{content}</tr>;
 };
 
 CourseListRow.defaultProps = {
   isHeader: false,
   textSecondCell: null,
+};
+
+CourseListRow.propTypes = {
+  isHeader: PropTypes.bool,
+  textFirstCell: PropTypes.string.isRequired,
+  textSecondCell: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default CourseListRow;
