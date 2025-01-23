@@ -1,6 +1,6 @@
-# 0x03. React component
+# React component
 
-This project goes further in-depth in the use of React components and lifecycle methods
+This project goes further in-depth into the use of React components and lifecycle methods
 
 Learning outcomes:
 
