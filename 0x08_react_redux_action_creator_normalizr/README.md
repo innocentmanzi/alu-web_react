@@ -1,7 +1,6 @@
 # 0x08. React Redux action creator+normalizr
-:open_file_folder: Specializations - Web Stack programming ― React  
-:bust_in_silhouette: By Johann Kerbrat, Engineering Manager at Uber Works  
-:copyright: **[Holberton School](https://www.holbertonschool.com/)**  
+:open_file_folder: Specializations - Full-stack web programming ― React  
+:bust_in_silhouette: By Johann Kerbrat, Engineering Manager at Uber Works    
 :bookmark: javascript | react | redux
 
 ## Resources
@@ -38,4 +37,4 @@ At the end of this project, you are expected to be able to [explain to anyone](h
 * [x] 7. Async Action Creators
 
 ## Software engineer
-[Javier Andrés Garzón Patarroyo](https://www.javierandresgp.com)
+[Innocent Manzi](https://github.com/innocentmanzi)
